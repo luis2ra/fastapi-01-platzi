@@ -38,10 +38,30 @@ class Person(BaseModel):
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "first_name": "Luis",
+                "last_name": "Altuve",
+                "age": 46,
+                "hair_color": "brown",
+                "is_married": False
+            }
+        }
+
 class Location(BaseModel):
-    city: str
-    state: str
-    country: str
+    city: str = Field(
+        ...,
+        example="Pamplona"
+    )
+    state: str = Field(
+        ...,
+        example="Norte de Santander"
+    )
+    country: str = Field(
+        ...,
+        example="Colombia"
+    )
 
 @app.get("/")
 def home():
