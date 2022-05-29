@@ -6,7 +6,7 @@ from enum import Enum
 from pydantic import BaseModel, Field
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path, status
+from fastapi import FastAPI, Body, Query, Path, status, Form
 
 app = FastAPI()
 
@@ -38,6 +38,7 @@ class PersonBase(BaseModel):
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
 
+# Person
 class Person(PersonBase):
     password: str = Field(
         ...,
@@ -56,9 +57,11 @@ class Person(PersonBase):
             }
         }
 
+# PersonOut
 class PersonOut(PersonBase):
     pass
 
+# Location
 class Location(BaseModel):
     city: str = Field(
         ...,
@@ -73,6 +76,18 @@ class Location(BaseModel):
         example="Colombia"
     )
 
+# LoginOut
+class LoginOut(BaseModel):
+    username: str = Field(
+        ...,
+        max_length=20,
+        example="luis2ra"
+    )
+    message: str = Field(
+        default="Login Succesfully!"
+    )
+
+# home
 @app.get(
     path="/",
     status_code=status.HTTP_200_OK
@@ -148,3 +163,15 @@ def update_person(
     results.update(location.dict())
 
     return results
+
+# Login
+@app.post(
+    path="/login",
+    response_model=LoginOut,
+    status_code=status.HTTP_201_CREATED
+)
+def login(
+    username: str = Form(...),
+    password: str = Form(...)
+):
+    return LoginOut(username=username)
