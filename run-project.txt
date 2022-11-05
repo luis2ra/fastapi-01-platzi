@@ -1,0 +1,5 @@
+# para ejecutar fastapi, se ejecuta:
+$ uvicorn main:app --reload
+
+# para el curso basico, revisar los branchs 00- hasta el 07-
+# para el curso intermedio, empieza en el branch 08-
