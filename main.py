@@ -57,24 +57,24 @@ class Person(BaseModel):
         }
 
 
-class PersonOut(BaseModel):
-    first_name: str = Field(
-        ...,
-        min_length=2,
-        max_length=50
-    )
-    last_name: str = Field(
-        ...,
-        min_length=2,
-        max_length=50
-    )
-    age: int = Field(
-        ...,
-        gt=0,
-        le=120
-    )
-    hair_color: Optional[HairColor] = Field(default=None)
-    is_married: Optional[bool] = Field(default=None)
+# class PersonOut(BaseModel):
+#     first_name: str = Field(
+#         ...,
+#         min_length=2,
+#         max_length=50
+#     )
+#     last_name: str = Field(
+#         ...,
+#         min_length=2,
+#         max_length=50
+#     )
+#     age: int = Field(
+#         ...,
+#         gt=0,
+#         le=120
+#     )
+#     hair_color: Optional[HairColor] = Field(default=None)
+#     is_married: Optional[bool] = Field(default=None)
 
 
 class Location(BaseModel):
@@ -98,7 +98,12 @@ def home():
 
 
 # Request and Response Body
-@app.post("/person/new", response_model=PersonOut)
+# review: https://fastapi.tiangolo.com/tutorial/response-model/?h=response_model_exclude#__tabbed_9_2
+@app.post(
+    "/person/new",
+    response_model=Person,
+    response_model_exclude={"password"}
+)
 def create_person(person: Person = Body(...)):
     return person
 
