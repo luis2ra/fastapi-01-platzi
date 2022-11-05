@@ -17,9 +17,11 @@ class Person(BaseModel):
     hair_color: Optional[str] = None
     is_married: Optional[bool] = None
 
+
 @app.get("/")
 def home():
     return {"hello": "World"}
+
 
 # Request and Response Body
 @app.post("/person/new")
