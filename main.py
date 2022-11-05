@@ -10,6 +10,7 @@ from fastapi import FastAPI, Body, Query, Path
 
 app = FastAPI()
 
+
 # Models
 class Person(BaseModel):
     first_name: str
@@ -23,14 +24,17 @@ class Location(BaseModel):
     state: str
     country: str
 
+
 @app.get("/")
 def home():
     return {"hello": "World"}
+
 
 # Request and Response Body
 @app.post("/person/new")
 def create_person(person: Person = Body(...)):
     return person
+
 
 # Validaciones: Query Parameters
 @app.get("/person/detail")
@@ -50,6 +54,7 @@ def show_person(
 ):
     return {"name": name, "age": age}
 
+
 # Validaciones: Path Parameters
 @app.get("/person/detail/{person_id}")
 def show_person_with_id(
@@ -61,6 +66,7 @@ def show_person_with_id(
     )
 ):
     return {"person_id": person_id}
+
 
 # Validaciones: Request Body
 @app.put("/person/{person_id}")
