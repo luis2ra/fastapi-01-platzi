@@ -80,7 +80,9 @@ def update_person(
     person: Person = Body(...),
     location: Location = Body(...)
 ):
-    results = person.dict()
-    results.update(location.dict())
+    # results = person.dict()
+    # results.update(location.dict())
+    results = dict(person)
+    results.update(dict(location))
 
     return results
