@@ -10,6 +10,7 @@ from fastapi import FastAPI, Body, Query, Path, status
 
 app = FastAPI()
 
+
 #Enums
 class HairColor(Enum):
     white = "white"
@@ -17,6 +18,7 @@ class HairColor(Enum):
     black = "black"
     blonde = "blonde"
     red = "red"
+
 
 # Models
 class PersonBase(BaseModel):
@@ -38,6 +40,8 @@ class PersonBase(BaseModel):
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
 
+
+# se aplica el concepto de herencia de POO
 class Person(PersonBase):
     password: str = Field(
         ...,
@@ -58,6 +62,7 @@ class Person(PersonBase):
 
 class PersonOut(PersonBase):
     pass
+
 
 class Location(BaseModel):
     city: str = Field(
@@ -80,6 +85,11 @@ class Location(BaseModel):
 def home():
     return {"hello": "World"}
 
+
+'''
+En el path operation siguiente, se anula el parametro response_model_exclude y se 
+aplica el concepto de herencia de POO para la clase Person.
+'''
 # Request and Response Body
 @app.post(
     path="/person/new",
@@ -88,6 +98,7 @@ def home():
 )
 def create_person(person: Person = Body(...)):
     return person
+
 
 # Validaciones: Query Parameters
 @app.get(
@@ -112,6 +123,7 @@ def show_person(
 ):
     return {"name": name, "age": age}
 
+
 # Validaciones: Path Parameters
 @app.get(
     path="/person/detail/{person_id}",
@@ -127,6 +139,7 @@ def show_person_with_id(
     )
 ):
     return {"person_id": person_id}
+
 
 # Validaciones: Request Body
 @app.put(
@@ -144,7 +157,9 @@ def update_person(
     person: Person = Body(...),
     location: Location = Body(...)
 ):
-    results = person.dict()
-    results.update(location.dict())
+    # results = person.dict()
+    # results.update(location.dict())
+    results = dict(person)
+    results.update(dict(location))
 
     return results
