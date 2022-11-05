@@ -28,6 +28,7 @@ def home():
 def create_person(person: Person = Body(...)):
     return person
 
+
 # Validaciones: Query Parameters
 @app.get("/person/detail")
 def show_person(
