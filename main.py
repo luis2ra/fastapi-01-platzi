@@ -87,14 +87,17 @@ class Location(BaseModel):
         example="Colombia"
     )
 
+
 @app.get("/")
 def home():
     return {"hello": "World"}
+
 
 # Request and Response Body
 @app.post("/person/new", response_model=PersonOut)
 def create_person(person: Person = Body(...)):
     return person
+
 
 # Validaciones: Query Parameters
 @app.get("/person/detail")
@@ -116,6 +119,7 @@ def show_person(
 ):
     return {"name": name, "age": age}
 
+
 # Validaciones: Path Parameters
 @app.get("/person/detail/{person_id}")
 def show_person_with_id(
@@ -128,6 +132,7 @@ def show_person_with_id(
     )
 ):
     return {"person_id": person_id}
+
 
 # Validaciones: Request Body
 @app.put("/person/{person_id}")
@@ -142,7 +147,9 @@ def update_person(
     person: Person = Body(...),
     location: Location = Body(...)
 ):
-    results = person.dict()
-    results.update(location.dict())
+    # results = person.dict()
+    # results.update(location.dict())
+    results = dict(person)
+    results.update(dict(location))
 
     return results
