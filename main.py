@@ -40,6 +40,8 @@ class PersonBase(BaseModel):
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
 
+
+# se aplica el concepto de herencia de POO
 class Person(PersonBase):
     password: str = Field(
         ...,
@@ -61,6 +63,7 @@ class Person(PersonBase):
 class PersonOut(PersonBase):
     pass
 
+
 class Location(BaseModel):
     city: str = Field(
         ...,
@@ -81,12 +84,15 @@ def home():
     return {"hello": "World"}
 
 
+'''
+En el path operation siguiente, se anula el parametro response_model_exclude y se 
+aplica el concepto de herencia de POO para la clase Person.
+'''
 # Request and Response Body
-# review: https://fastapi.tiangolo.com/tutorial/response-model/?h=response_model_exclude#__tabbed_9_2
 @app.post(
     "/person/new",
-    response_model=Person,
-    response_model_exclude={"password"}
+    response_model=PersonOut,
+    # response_model_exclude={"password"}
 )
 def create_person(person: Person = Body(...)):
     return person
