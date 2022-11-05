@@ -10,6 +10,7 @@ from fastapi import FastAPI, Body, Query, Path
 
 app = FastAPI()
 
+
 #Enums
 class HairColor(Enum):
     white = "white"
@@ -17,6 +18,7 @@ class HairColor(Enum):
     black = "black"
     blonde = "blonde"
     red = "red"
+
 
 # Models
 class Person(BaseModel):
@@ -54,6 +56,7 @@ class Person(BaseModel):
             }
         }
 
+
 class PersonOut(BaseModel):
     first_name: str = Field(
         ...,
@@ -72,6 +75,7 @@ class PersonOut(BaseModel):
     )
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
+
 
 class Location(BaseModel):
     city: str = Field(
