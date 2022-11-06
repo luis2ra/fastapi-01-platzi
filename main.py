@@ -6,7 +6,7 @@ from enum import Enum
 from pydantic import BaseModel, Field, EmailStr
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path, Form, Header, Cookie, status
+from fastapi import FastAPI, Body, Query, Path, Form, Header, Cookie, File, UploadFile, status 
 
 app = FastAPI()
 
@@ -217,3 +217,20 @@ def contact(
     ads: Optional[str] = Cookie(default=None)
 ):
     return user_agent
+
+
+# Files
+@app.post(
+    path="/post-image",
+    status_code=status.HTTP_201_CREATED
+)
+def post_image(
+    image: UploadFile = File(
+        ...
+    )
+):
+    return {
+        "Filename": image.filename,
+        "Format": image.content_type,
+        "Size(kb)": len(image.file.read()) / 1000  # deberia ser 1024 pero no concuerda con el size del archivo demo.
+    }
