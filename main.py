@@ -6,7 +6,7 @@ from enum import Enum
 from pydantic import BaseModel, Field
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path, status, Form
+from fastapi import FastAPI, Body, Query, Path, Form, status
 
 app = FastAPI()
 
