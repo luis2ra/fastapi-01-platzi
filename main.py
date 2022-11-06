@@ -6,9 +6,13 @@ from enum import Enum
 from pydantic import BaseModel, Field, EmailStr
 
 # FastAPI
-from fastapi import FastAPI, Body, Query, Path, Form, Header, Cookie, File, UploadFile, status 
+from fastapi import FastAPI, Body, Query, Path, Form, Header, Cookie, File, UploadFile, HTTPException, status 
 
 app = FastAPI()
+
+
+# Definimos data ficticia para simular el uso de HTTPException
+persons = [1, 2, 3, 4, 5]
 
 
 #Enums
@@ -154,6 +158,11 @@ def show_person_with_id(
         example=1
     )
 ):
+    if person_id not in persons:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="This person doesn't exists!"
+        )
     return {"person_id": person_id}
 
 
